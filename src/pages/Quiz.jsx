@@ -9,7 +9,6 @@ function Quiz() {
   const [score, setScore] = useState(0)
   const [answered, setAnswered] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [selectedAnswer, setSelectedAnswer] = useState(null)
   const navigate = useNavigate()
   
   // Ambil durasi dari settings atau default 5 menit
@@ -92,10 +91,6 @@ function Quiz() {
   }, [questions, current, score, answered, timeLeft, loading])
 
   const handleAnswer = (answer) => {
-    if (selectedAnswer !== null) return // Prevent double-click
-
-    setSelectedAnswer(answer)
-
     // Cek jawaban
     const isCorrect = answer === questions[current].correct_answer
     const newScore = isCorrect ? score + 1 : score
@@ -107,16 +102,13 @@ function Quiz() {
 
     setAnswered(newAnswered)
 
-    // Pindah ke soal berikutnya setelah delay singkat
-    setTimeout(() => {
-      if (current + 1 < questions.length) {
-        setCurrent(current + 1)
-        setSelectedAnswer(null)
-      } else {
-        // Kirim nilai yang sudah di-update langsung
-        finishQuiz(newScore, newAnswered)
-      }
-    }, 500)
+    // Langsung pindah ke soal berikutnya tanpa delay
+    if (current + 1 < questions.length) {
+      setCurrent(current + 1)
+    } else {
+      // Kirim nilai yang sudah di-update langsung
+      finishQuiz(newScore, newAnswered)
+    }
   }
 
   const finishQuiz = (finalScore = score, finalAnswered = answered) => {
@@ -160,8 +152,9 @@ function Quiz() {
   const options = question.shuffledOptions
 
   return (
-    <div className="quiz-container">
-      <div className="quiz-header">
+    <div className="quiz-page">
+      <div className="quiz-container">
+        <div className="quiz-header">
         <div className="user-info">
           <span>{localStorage.getItem("user")}</span>
         </div>
@@ -212,20 +205,14 @@ function Quiz() {
               <button 
                 key={index} 
                 onClick={() => handleAnswer(opt)}
-                className={`option-button ${
-                  selectedAnswer === opt 
-                    ? opt === question.correct_answer 
-                      ? 'correct' 
-                      : 'incorrect'
-                    : ''
-                }`}
-                disabled={selectedAnswer !== null}
+                className="option-button"
                 dangerouslySetInnerHTML={{ __html: opt }} 
               />
             ))}
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

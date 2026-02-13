@@ -61,7 +61,6 @@ function Login() {
 
   return (
     <div className="login-container">
-      <div className="bg-pattern"></div>
       <div className="login-content">
         <div className="login-card">
           <div className="login-header">
@@ -171,12 +170,6 @@ function Login() {
               <span className="arrow">→</span>
             </button>
           </form>
-        </div>
-
-        <div className="decorative-elements">
-          <div className="circle circle-1"></div>
-          <div className="circle circle-2"></div>
-          <div className="circle circle-3"></div>
         </div>
       </div>
     </div>
