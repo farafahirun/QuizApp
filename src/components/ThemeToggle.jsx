@@ -2,12 +2,10 @@ import { useState, useEffect } from 'react'
 
 function ThemeToggle() {
   const [theme, setTheme] = useState(() => {
-    // Check localStorage or default to light
     return localStorage.getItem('theme') || 'light'
   })
 
   useEffect(() => {
-    // Apply theme to root element
     document.documentElement.setAttribute('data-theme', theme)
     localStorage.setItem('theme', theme)
   }, [theme])

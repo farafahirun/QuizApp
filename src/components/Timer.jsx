@@ -26,14 +26,12 @@ function Timer({ duration, onTimeUp, onTimeUpdate }) {
     return () => clearInterval(interval)
   }, [time, onTimeUp, onTimeUpdate])
 
-  // Format waktu ke menit:detik
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
-  // Tentukan warna berdasarkan waktu tersisa
   const getTimerClass = () => {
     if (time <= 30) return 'timer critical'
     if (time <= 60) return 'timer warning'

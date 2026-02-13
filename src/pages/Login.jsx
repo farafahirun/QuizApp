@@ -9,12 +9,11 @@ function Login() {
     category: "",
     difficulty: "",
     type: "",
-    duration: 300 // 5 menit default
+    duration: 300 
   })
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Fetch kategori dari OpenTDB
     fetch("https://opentdb.com/api_category.php")
       .then(res => res.json())
       .then(data => {
@@ -26,7 +25,6 @@ function Login() {
   }, [])
 
   useEffect(() => {
-    // Cek apakah ada kuis yang sedang berlangsung
     const savedQuizState = localStorage.getItem("quizState")
     const savedUser = localStorage.getItem("user")
     
@@ -37,7 +35,6 @@ function Login() {
       if (resume) {
         navigate("/quiz")
       } else {
-        // Hapus data kuis lama jika user tidak ingin melanjutkan
         localStorage.removeItem("quizState")
       }
     }

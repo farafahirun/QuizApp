@@ -122,15 +122,9 @@ fetch("https://opentdb.com/api.php?...&type=boolean")
 
 **Cara Mengubah Durasi:**
 ```javascript
-// Di src/pages/Quiz.jsx, line 11
-const [timeLeft, setTimeLeft] = useState(300) // 300 detik = 5 menit
-
-// Ubah menjadi 10 menit
-const [timeLeft, setTimeLeft] = useState(600) // 600 detik = 10 menit
-
-// Ubah menjadi 3 menit
-const [timeLeft, setTimeLeft] = useState(180) // 180 detik = 3 menit
-```
+const [timeLeft, setTimeLeft] = useState(300) 
+const [timeLeft, setTimeLeft] = useState(600)
+const [timeLeft, setTimeLeft] = useState(180) 
 
 ---
 
@@ -200,10 +194,10 @@ const handleAnswer = (answer) => {
      - Persentase & grade
 
 ```javascript
-// Di Timer.jsx
+
 useEffect(() => {
   if (time <= 0) {
-    onTimeUp() // Trigger saat waktu habis
+    onTimeUp() 
     return
   }
   
@@ -211,7 +205,7 @@ useEffect(() => {
     setTime((prev) => {
       const newTime = prev - 1
       if (onTimeUpdate) {
-        onTimeUpdate(newTime) // Update ke parent
+        onTimeUpdate(newTime) 
       }
       return newTime
     })
@@ -220,7 +214,6 @@ useEffect(() => {
   return () => clearInterval(interval)
 }, [time, onTimeUp, onTimeUpdate])
 
-// Di Quiz.jsx
 const finishQuiz = () => {
   localStorage.removeItem("quizState")
   navigate("/result", {
@@ -244,23 +237,22 @@ const finishQuiz = () => {
 #### Data yang Disimpan di LocalStorage:
 
 ```javascript
-// Key: "quizState"
+
 {
-  questions: [...],          // Array soal lengkap dengan opsi ter-shuffle
-  current: 5,                // Index soal yang sedang dikerjakan
-  score: 3,                  // Skor saat ini
-  answered: 5,               // Jumlah soal yang sudah dijawab
-  timeLeft: 245              // Waktu tersisa dalam detik
+  questions: [...],        
+  current: 5,                
+  score: 3,                 
+  answered: 5,              
+  timeLeft: 245            
 }
 
-// Key: "user"
-"username123"                // Username user
+"username123"              
 ```
 
 #### Auto-Save Mechanism:
 
 ```javascript
-// Di Quiz.jsx
+
 useEffect(() => {
   if (questions.length > 0 && !loading) {
     localStorage.setItem("quizState", JSON.stringify({
@@ -286,7 +278,7 @@ Data otomatis di-save ke localStorage.
 #### Resume Detection:
 
 ```javascript
-// Di Login.jsx
+
 useEffect(() => {
   const savedQuizState = localStorage.getItem("quizState")
   const savedUser = localStorage.getItem("user")
@@ -296,9 +288,9 @@ useEffect(() => {
       `Hai ${savedUser}! Ada kuis yang belum selesai. Lanjutkan kuis?`
     )
     if (resume) {
-      navigate("/quiz") // Lanjutkan
+      navigate("/quiz") 
     } else {
-      localStorage.removeItem("quizState") // Hapus data lama
+      localStorage.removeItem("quizState") 
     }
   }
 }, [navigate])
@@ -307,7 +299,7 @@ useEffect(() => {
 #### Load Saved State:
 
 ```javascript
-// Di Quiz.jsx
+
 useEffect(() => {
   const saved = localStorage.getItem("quizState")
   if (saved) {
@@ -319,7 +311,6 @@ useEffect(() => {
     setTimeLeft(data.timeLeft)
     setLoading(false)
   } else {
-    // Fetch soal baru dari API
     fetch("https://opentdb.com/api.php?amount=15&category=9&difficulty=medium")
       .then(...)
   }
@@ -329,14 +320,13 @@ useEffect(() => {
 #### Clear State saat Selesai:
 
 ```javascript
-// Di Result.jsx
+
 useEffect(() => {
-  localStorage.removeItem("quizState") // Hapus saat masuk result
+  localStorage.removeItem("quizState")
 }, [])
 
-// Di Quiz.jsx - finishQuiz()
 const finishQuiz = () => {
-  localStorage.removeItem("quizState") // Hapus saat kuis selesai
+  localStorage.removeItem("quizState") 
   navigate("/result", { state: { ... } })
 }
 ```

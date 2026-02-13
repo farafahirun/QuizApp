@@ -11,7 +11,6 @@ function Quiz() {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   
-  // Ambil durasi dari settings atau default 5 menit
   const getInitialDuration = () => {
     const settingsData = localStorage.getItem("quizSettings")
     const settings = settingsData ? JSON.parse(settingsData) : { duration: 300 }
@@ -20,7 +19,6 @@ function Quiz() {
   
   const [timeLeft, setTimeLeft] = useState(getInitialDuration())
 
-  // Cek user login
   useEffect(() => {
     const user = localStorage.getItem("user")
     if (!user) {
@@ -28,7 +26,6 @@ function Quiz() {
     }
   }, [navigate])
 
-  // Load soal dari API atau localStorage
   useEffect(() => {
     const saved = localStorage.getItem("quizState")
     if (saved) {
@@ -40,11 +37,9 @@ function Quiz() {
       setTimeLeft(data.timeLeft)
       setLoading(false)
     } else {
-      // Ambil pengaturan dari localStorage
       const settingsData = localStorage.getItem("quizSettings")
       const settings = settingsData ? JSON.parse(settingsData) : { amount: 15 }
       
-      // Bangun URL API berdasarkan pengaturan
       let apiUrl = `https://opentdb.com/api.php?amount=${settings.amount || 15}`
       if (settings.category) apiUrl += `&category=${settings.category}`
       if (settings.difficulty) apiUrl += `&difficulty=${settings.difficulty}`
@@ -54,7 +49,6 @@ function Quiz() {
         .then(res => res.json())
         .then(data => {
           if (data.results && data.results.length > 0) {
-            // Shuffle options untuk setiap soal dan simpan
             const questionsWithShuffledOptions = data.results.map(q => ({
               ...q,
               shuffledOptions: shuffleArray([
@@ -77,7 +71,6 @@ function Quiz() {
     }
   }, [navigate])
 
-  // Auto-save ke localStorage setiap ada perubahan state
   useEffect(() => {
     if (questions.length > 0 && !loading) {
       localStorage.setItem("quizState", JSON.stringify({
@@ -91,7 +84,6 @@ function Quiz() {
   }, [questions, current, score, answered, timeLeft, loading])
 
   const handleAnswer = (answer) => {
-    // Cek jawaban
     const isCorrect = answer === questions[current].correct_answer
     const newScore = isCorrect ? score + 1 : score
     const newAnswered = answered + 1
@@ -102,11 +94,9 @@ function Quiz() {
 
     setAnswered(newAnswered)
 
-    // Langsung pindah ke soal berikutnya tanpa delay
     if (current + 1 < questions.length) {
       setCurrent(current + 1)
     } else {
-      // Kirim nilai yang sudah di-update langsung
       finishQuiz(newScore, newAnswered)
     }
   }

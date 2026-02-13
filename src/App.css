@@ -178,12 +178,10 @@
   margin-bottom: 0;
 }
 
-/* Full width untuk username */
 .input-group.full-width {
   grid-column: 1 / -1;
 }
 
-/* Select dropdown styling */
 .login-input option {
   background: var(--bg-card);
   color: var(--text-primary);
@@ -195,7 +193,6 @@
   transform: translateY(-1px);
 }
 
-/* Responsive untuk mobile */
 @media (max-width: 640px) {
   .settings-grid {
     grid-template-columns: 1fr;
@@ -327,7 +324,6 @@
   transform: translateX(4px);
 }
 
-/* Dark mode adjustments for login background */
 :root[data-theme="dark"] .login-container {
   background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
 }
@@ -478,7 +474,6 @@
   text-shadow: 0 2px 4px var(--shadow);
 }
 
-/* Timer Styles */
 .timer {
   display: flex;
   align-items: center;
@@ -631,7 +626,6 @@
   box-shadow: 0 0 10px #ff4444;
 }
 
-/* Quiz Content */
 .quiz-content {
   background: var(--bg-card);
   padding: 1.5rem;
@@ -843,7 +837,6 @@
   75% { transform: translateX(10px); }
 }
 
-/* Loading */
 .loading {
   text-align: center;
   padding: 4rem;
